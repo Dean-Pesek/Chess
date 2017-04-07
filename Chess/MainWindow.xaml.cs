@@ -97,8 +97,8 @@ namespace Chess
 					SvgViewbox figureImage = new SvgViewbox
 					{
 						Source = figure,
-						HorizontalAlignment = HorizontalAlignment.Center,
-						VerticalAlignment = VerticalAlignment.Center
+						/*HorizontalAlignment = HorizontalAlignment.Center,
+						VerticalAlignment = VerticalAlignment.Center*/
 					};
 
 					figureImage.SetValue(Grid.RowProperty, 0);
@@ -169,51 +169,43 @@ namespace Chess
 			if (white)
 			{
 				#region FirstRow
-				if (FindName("Chessfield_X0Y0") is Grid)
+				if (FindName("Chessfield_X0Y0") is Grid chessfield_X0Y0)
 				{
-					Grid chessfield_X0Y0 = (Grid)FindName("Chessfield_X0Y0");
 					chessfield_X0Y0.Children.Add(figureImages[1]);
 				}
 
-				if (FindName("Chessfield_X1Y0") is Grid)
+				if (FindName("Chessfield_X1Y0") is Grid chessfield_X1Y0)
 				{
-					Grid chessfield_X1Y0 = FindName("Chessfield_X1Y0") as Grid;
 					chessfield_X1Y0.Children.Add(figureImages[2]);
 				}
 
-				if (FindName("Chessfield_X2Y0") is Grid)
+				if (FindName("Chessfield_X2Y0") is Grid chessfield_X2Y0)
 				{
-					Grid chessfield_X2Y0 = FindName("Chessfield_X2Y0") as Grid;
 					chessfield_X2Y0.Children.Add(figureImages[3]);
 				}
 
-				if (FindName("Chessfield_X3Y0") is Grid)
+				if (FindName("Chessfield_X3Y0") is Grid chessfield_X3Y0)
 				{
-					Grid chessfield_X3Y0 = FindName("Chessfield_X3Y0") as Grid;
 					chessfield_X3Y0.Children.Add(figureImages[5]);
 				}
 
-				if (FindName("Chessfield_X4Y0") is Grid)
+				if (FindName("Chessfield_X4Y0") is Grid chessfield_X4Y0)
 				{
-					Grid chessfield_X4Y0 = FindName("Chessfield_X4Y0") as Grid;
 					chessfield_X4Y0.Children.Add(figureImages[4]);
 				}
 
-				if (FindName("Chessfield_X5Y0") is Grid)
+				if (FindName("Chessfield_X5Y0") is Grid chessfield_X5Y0)
 				{
-					Grid chessfield_X5Y0 = FindName("Chessfield_X5Y0") as Grid;
 					chessfield_X5Y0.Children.Add(figureImages[15]);
 				}
 
-				if (FindName("Chessfield_X6Y0") is Grid)
+				if (FindName("Chessfield_X6Y0") is Grid chessfield_X6Y0)
 				{
-					Grid chessfield_X6Y0 = FindName("Chessfield_X6Y0") as Grid;
 					chessfield_X6Y0.Children.Add(figureImages[14]);
 				}
 
-				if (FindName("Chessfield_X7Y0") is Grid)
+				if (FindName("Chessfield_X7Y0") is Grid chessfield_X7Y0)
 				{
-					Grid chessfield_X7Y0 = FindName("Chessfield_X7Y0") as Grid;
 					chessfield_X7Y0.Children.Add(figureImages[13]);
 				}
 				#endregion
@@ -221,9 +213,8 @@ namespace Chess
 				#region SecondRow
 				for (int x = 0; x < 8; ++x)
 				{
-					if (FindName("Chessfield_X" + x + "Y1") is Grid)
+					if (FindName($"Chessfield_X{x}Y1") is Grid chessfield)
 					{
-						Grid chessfield = FindName("Chessfield_X" + x + "Y1") as Grid;
 						chessfield.Children.Add(figureImages[24 + x]);
 					}
 				}
@@ -232,51 +223,43 @@ namespace Chess
 			else
 			{
 				#region FirstRow
-				if (FindName("Chessfield_X0Y7") is Grid)
+				if (FindName("Chessfield_X0Y7") is Grid chessfield_X0Y7)
 				{
-					Grid chessfield_X0Y7 = FindName("Chessfield_X0Y7") as Grid;
 					chessfield_X0Y7.Children.Add(figureImages[7]);
 				}
 
-				if (FindName("Chessfield_X1Y7") is Grid)
+				if (FindName("Chessfield_X1Y7") is Grid chessfield_X1Y7)
 				{
-					Grid chessfield_X1Y7 = FindName("Chessfield_X1Y7") as Grid;
 					chessfield_X1Y7.Children.Add(figureImages[8]);
 				}
 
-				if (FindName("Chessfield_X2Y7") is Grid)
+				if (FindName("Chessfield_X2Y7") is Grid chessfield_X2Y7)
 				{
-					Grid chessfield_X2Y7 = FindName("Chessfield_X2Y7") as Grid;
 					chessfield_X2Y7.Children.Add(figureImages[9]);
 				}
 
-				if (FindName("Chessfield_X3Y7") is Grid)
+				if (FindName("Chessfield_X3Y7") is Grid chessfield_X3Y7)
 				{
-					Grid chessfield_X3Y7 = FindName("Chessfield_X3Y7") as Grid;
 					chessfield_X3Y7.Children.Add(figureImages[10]);
 				}
 
-				if (FindName("Chessfield_X4Y7") is Grid)
+				if (FindName("Chessfield_X4Y7") is Grid chessfield_X4Y7)
 				{
-					Grid chessfield_X4Y7 = FindName("Chessfield_X4Y7") as Grid;
 					chessfield_X4Y7.Children.Add(figureImages[11]);
 				}
 
-				if (FindName("Chessfield_X5Y7") is Grid)
+				if (FindName("Chessfield_X5Y7") is Grid chessfield_X5Y7)
 				{
-					Grid chessfield_X5Y7 = FindName("Chessfield_X5Y7") as Grid;
 					chessfield_X5Y7.Children.Add(figureImages[21]);
 				}
 
-				if (FindName("Chessfield_X6Y7") is Grid)
+				if (FindName("Chessfield_X6Y7") is Grid chessfield_X6Y7)
 				{
-					Grid chessfield_X6Y7 = FindName("Chessfield_X6Y7") as Grid;
 					chessfield_X6Y7.Children.Add(figureImages[20]);
 				}
 
-				if (FindName("Chessfield_X7Y7") is Grid)
+				if (FindName("Chessfield_X7Y7") is Grid chessfield_X7Y7)
 				{
-					Grid chessfield_X7Y7 = FindName("Chessfield_X7Y7") as Grid;
 					chessfield_X7Y7.Children.Add(figureImages[19]);
 				}
 				#endregion
@@ -284,9 +267,8 @@ namespace Chess
 				#region SecondRow
 				for (int x = 0; x < 8; ++x)
 				{
-					if (FindName("Chessfield_X" + x + "Y6") is Grid)
+					if (FindName($"Chessfield_X{x}Y6") is Grid chessfield)
 					{
-						Grid chessfield = FindName("Chessfield_X" + x + "Y6") as Grid;
 						chessfield.Children.Add(figureImages[32 + x]);
 					}
 				}
