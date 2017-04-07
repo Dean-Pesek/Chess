@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Markup;
 using System.Windows.Media;
 using SharpVectors.Converters;
+using HorizontalAlignment = System.Windows.HorizontalAlignment;
 
 namespace Chess
 {
@@ -35,11 +37,6 @@ namespace Chess
 
 			CreateChessboard();
 			PlaceFigures();
-
-			using (Stream stream = File.OpenWrite("D:\\Test.xaml"))
-			{
-				XamlWriter.Save(this, stream);
-			}
 		}
 
 		private void CreateChessboard()
@@ -174,7 +171,6 @@ namespace Chess
 				#region FirstRow
 				if (FindName("Chessfield_X0Y0") is Grid)
 				{
-					Console.WriteLine("Field found");
 					Grid chessfield_X0Y0 = (Grid)FindName("Chessfield_X0Y0");
 					chessfield_X0Y0.Children.Add(figureImages[1]);
 				}
@@ -194,13 +190,13 @@ namespace Chess
 				if (FindName("Chessfield_X3Y0") is Grid)
 				{
 					Grid chessfield_X3Y0 = FindName("Chessfield_X3Y0") as Grid;
-					chessfield_X3Y0.Children.Add(figureImages[4]);
+					chessfield_X3Y0.Children.Add(figureImages[5]);
 				}
 
 				if (FindName("Chessfield_X4Y0") is Grid)
 				{
 					Grid chessfield_X4Y0 = FindName("Chessfield_X4Y0") as Grid;
-					chessfield_X4Y0.Children.Add(figureImages[5]);
+					chessfield_X4Y0.Children.Add(figureImages[4]);
 				}
 
 				if (FindName("Chessfield_X5Y0") is Grid)
@@ -297,5 +293,60 @@ namespace Chess
 				#endregion
 			}
 		}
+
+		#region Listeners
+
+		private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			if (WindowState != WindowState.Maximized)
+			{
+				if (this.Width <= this.Height - 40)
+				{
+					Chessboard.Width = this.Width - 20;
+					Chessboard.Height = this.Width - 20;
+				}
+				else
+				{
+					Chessboard.Width = this.Height - 60;
+					Chessboard.Height = this.Height - 60;
+				}
+			}
+		}
+
+		private void Window_StateChanged(object sender, EventArgs e)
+		{
+			if (WindowState == WindowState.Maximized)
+			{
+				if (Screen.PrimaryScreen.Bounds.Width > Screen.PrimaryScreen.Bounds.Height)
+				{
+					Chessboard.Width = Screen.PrimaryScreen.Bounds.Height - 60;
+					Chessboard.Height = Screen.PrimaryScreen.Bounds.Height - 60;
+				}
+				else
+				{
+					Chessboard.Width = Screen.PrimaryScreen.Bounds.Width - 20;
+					Chessboard.Height = Screen.PrimaryScreen.Bounds.Width - 20;
+				}
+			}
+		}
+
+		private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+		{
+#if DEBUG
+			if (e.Key == System.Windows.Input.Key.Space)
+			{
+				using (Stream stream = File.OpenWrite("D:\\Test.xaml"))
+				{
+					XamlWriter.Save(this, stream);
+				}
+			}
+			else if (e.Key == System.Windows.Input.Key.Enter)
+			{
+				Window_SizeChanged(sender, null);
+			}
+#endif
+		}
+
+		#endregion
 	}
 }
