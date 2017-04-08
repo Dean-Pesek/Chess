@@ -61,6 +61,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -88,6 +91,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Logic\Figure.cs" />
+    <Compile Include="Logic\FigureListToBigException.cs" />
+    <Compile Include="Logic\Game.cs" />
+    <Compile Include="Logic\Player.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -121,58 +128,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Figures\White\Bishop.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\White\King.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\White\Knight.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\White\Pawn.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\White\Queen.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\White\Rook.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\White\BishopWhite.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\White\KingWhite.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\White\KnightWhite.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\White\PawnWhite.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\White\QueenWhite.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\White\RookWhite.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\Black\BishopBlack.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\Black\KingBlack.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\Black\KnightBlack.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\Black\PawnBlack.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\Black\QueenBlack.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Figures\Black\RookBlack.svg" />
+    <Content Include="Resources\Figures\BishopBlack.svg" />
+    <Content Include="Resources\Figures\BishopWhite.svg" />
+    <Content Include="Resources\Figures\KingBlack.svg" />
+    <Content Include="Resources\Figures\KingWhite.svg" />
+    <Content Include="Resources\Figures\KnightBlack.svg" />
+    <Content Include="Resources\Figures\KnightWhite.svg" />
+    <Content Include="Resources\Figures\PawnBlack.svg" />
+    <Content Include="Resources\Figures\PawnWhite.svg" />
+    <Content Include="Resources\Figures\QueenBlack.svg" />
+    <Content Include="Resources\Figures\QueenWhite.svg" />
+    <Content Include="Resources\Figures\RookBlack.svg" />
+    <Content Include="Resources\Figures\RookWhite.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

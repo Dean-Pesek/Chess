@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <DockPanel Name="MenuBar"
                    Grid.Row="0">
             <Menu DockPanel.Dock="Top">
@@ -30,7 +30,7 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-
+        
         <Grid Name="Chessboard"
               Grid.Row="1"
               Margin="10"
@@ -57,4 +57,14 @@
             </Grid.ColumnDefinitions>
         </Grid>
     </Grid>
+
+    <Window.Resources>
+        <Style TargetType="Grid">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
 </Window>
