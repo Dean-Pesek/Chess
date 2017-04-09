@@ -77,6 +77,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesWhite[1],
 						Name = "Rook1",
+						Color = GameColor.White,
 						X = 0,
 						Y = 0
 					},
@@ -84,6 +85,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesWhite[2],
 						Name = "Knight1",
+						Color = GameColor.White,
 						X = 1,
 						Y = 0
 					},
@@ -91,6 +93,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesWhite[3],
 						Name = "Bishop1",
+						Color = GameColor.White,
 						X = 2,
 						Y = 0
 					},
@@ -98,6 +101,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesWhite[4],
 						Name = "Queen",
+						Color = GameColor.White,
 						X = 3,
 						Y = 0
 					},
@@ -105,6 +109,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesWhite[5],
 						Name = "King",
+						Color = GameColor.White,
 						X = 4,
 						Y = 0
 					},
@@ -119,6 +124,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesWhite[2],
 						Name = "Knight2",
+						Color = GameColor.White,
 						X = 6,
 						Y = 0
 					},
@@ -126,6 +132,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesWhite[1],
 						Name = "Rook2",
+						Color = GameColor.White,
 						X = 7,
 						Y = 0
 					}
@@ -136,6 +143,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesWhite[0],
 						Name = $"Pawn{i+1}",
+						Color = GameColor.White,
 						X = i,
 						Y = 1
 					});
@@ -149,6 +157,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesBlack[1],
 						Name = "Rook1",
+						Color = GameColor.Black,
 						X = 0,
 						Y = 7
 					},
@@ -156,6 +165,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesBlack[2],
 						Name = "Knight1",
+						Color = GameColor.Black,
 						X = 1,
 						Y = 7
 					},
@@ -163,6 +173,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesBlack[3],
 						Name = "Bishop1",
+						Color = GameColor.Black,
 						X = 2,
 						Y = 7
 					},
@@ -170,6 +181,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesBlack[4],
 						Name = "Queen",
+						Color = GameColor.Black,
 						X = 3,
 						Y = 7
 					},
@@ -177,6 +189,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesBlack[5],
 						Name = "King",
+						Color = GameColor.Black,
 						X = 4,
 						Y = 7
 					},
@@ -184,6 +197,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesBlack[3],
 						Name = "Bishop2",
+						Color = GameColor.Black,
 						X = 5,
 						Y = 7
 					},
@@ -191,6 +205,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesBlack[2],
 						Name = "Knight2",
+						Color = GameColor.Black,
 						X = 6,
 						Y = 7
 					},
@@ -198,6 +213,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesBlack[1],
 						Name = "Rook2",
+						Color = GameColor.Black,
 						X = 7,
 						Y = 7
 					}
@@ -208,6 +224,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesBlack[0],
 						Name = $"Pawn{i+1}",
+						Color = GameColor.Black,
 						X = i,
 						Y = 6
 					});

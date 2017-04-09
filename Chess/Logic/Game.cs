@@ -12,8 +12,9 @@ namespace Chess.Logic
 
 		public Player Player1 { get; set; }
 		public Player Player2 { get; set; }
-		public int PointsPlayer1 { get; set; }
-		public int PointsPlayer2 { get; set; }
+
+		public Player CurrentPlayer { get; set; }
+		public Player Winner { get; set; }
 
 		#endregion
 
@@ -27,6 +28,7 @@ namespace Chess.Logic
 		{
 			this.Player1 = Player1;
 			this.Player2 = Player2;
+			this.Winner = null;
 		}
 
 		#endregion
@@ -37,9 +39,14 @@ namespace Chess.Logic
 		{
 			Player1.SetDefaultFigures();
 			Player2.SetDefaultFigures();
+
+			if (Player1.Color == GameColor.White)
+				CurrentPlayer = Player1;
+			else if (Player2.Color == GameColor.White)
+				CurrentPlayer = Player2;
 		}
 
-		public List<(int, int)> GetOptions(Player player, Figure figure)
+		public List<(int, int)> GetOptions(Figure Figure)
 		{
 			List<(int, int)> options = new List<(int, int)>();
 
@@ -57,28 +64,47 @@ namespace Chess.Logic
 			return options;
 		}
 
-		public void Move(GameColor Color, string FigureName, int X, int Y)
+		public void Move(Figure Figure, int DestX, int DestY)
 		{
-			Player player = null;
-			if (Player1.Color == Color)
-				player = Player1;
-			else if (Player2.Color == Color)
-				player = Player2;
+			//Figure figure = GetFigureBy(TempFigure);
 
-			Figure figure = player.Figures.Find(tempFigure => tempFigure.Name == FigureName);
-
-			if (IsEmpty(X, Y))
+			if (IsEmpty(DestX, DestY))
 			{
-				figure.X = X;
-				figure.Y = Y;
+				Figure.X = DestX;
+				Figure.Y = DestY;
 			}
-			//else if (CanEliminate(player, figure, X, Y))
-			//{
-			//	foreach ()
+		}
 
-			//	Figure.X = X;
-			//	figure.Y = Y;
-			//}
+		public Figure GetFigureBy(Figure TempFigure)
+		{
+			Player[] players = { Player1, Player2 };
+
+			foreach (Player player in players)
+			{
+				Figure figure = player.Figures.Find(tempFigure => tempFigure.X == TempFigure.X && tempFigure.Y == TempFigure.Y);
+				if (figure != null)
+				{
+					return figure;
+				}
+			}
+
+			return new Figure();
+		}
+
+		public Figure GetFigureBy(int X, int Y)
+		{
+			Player[] players = { Player1, Player2 };
+
+			foreach (Player player in players)
+			{
+				Figure figure = player.Figures.Find(tempFigure => tempFigure.X == X && tempFigure.Y == Y);
+				if (figure != null)
+				{
+					return figure;
+				}
+			}
+
+			return new Figure();
 		}
 
 		public bool IsEmpty(int X, int Y)
