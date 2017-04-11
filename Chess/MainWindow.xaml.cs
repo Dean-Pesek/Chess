@@ -17,8 +17,14 @@ namespace Chess
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		#region Attributes
+
 		private Game _currentGame;
 		private List<Game> _recentGames = new List<Game>();
+
+		private List<MouseButtonEventHandler> _recentOptionClickHandlers = new List<MouseButtonEventHandler>();
+
+		#endregion
 
 		#region Constructors
 
@@ -118,6 +124,26 @@ namespace Chess
 			}
 		}
 
+		private void PlaceFigures(Figure[] Figures)
+		{
+			foreach (Figure figure in Figures)
+			{
+				if (this.FindName($"Chessfield_X{figure.X}Y{figure.Y}") is Grid chessfield)
+				{
+					chessfield.Children.Clear();
+
+					if (figure.Image != null)
+					{
+						chessfield.Children.Add(new SvgViewbox
+						{
+							Source = figure.Image
+						});
+
+					}
+				}
+			}
+		}
+
 		private void PlaceOptions(List<(int, int)> Options, int SourceX, int SourceY)
 		{
 			foreach ((int, int) option in Options)
@@ -127,41 +153,46 @@ namespace Chess
 					chessfield.Children.Add(new Border
 					{
 						BorderBrush = Brushes.Red,
-						BorderThickness = new Thickness(2)
+						BorderThickness = new Thickness(2),
+						Background = Brushes.Red
 					});
-					chessfield.MouseDown += (object sender, MouseButtonEventArgs e) =>
+
+					chessfield.MouseDown -= Chessfield_Click;
+
+					Log(_recentOptionClickHandlers.Count.ToString());
+					foreach (MouseButtonEventHandler optionClickHandler in _recentOptionClickHandlers)
 					{
-						if (sender is Grid chessfield2)
-						{
-							int x2 = (int)chessfield2.GetValue(Grid.ColumnProperty);
-							int y2 = (int)chessfield2.GetValue(Grid.RowProperty);
+						chessfield.MouseDown -= optionClickHandler;
+					}
 
-							_currentGame.Move(_currentGame.GetFigureBy(SourceX, SourceY), x2, y2);
-
-							PlaceFigures();
-							chessfield.MouseDown += Chessfield_Click;
-						}
-					};
+					chessfield.MouseDown += (sender, e) => Option_Click(sender, e, chessfield, SourceX, SourceY);
+					_recentOptionClickHandlers.Add((sender, e) => Option_Click(sender, e, chessfield, SourceX, SourceY));
 				}
 			}
 		}
 
 		private void RemoveOptions()
 		{
+			Log(_recentOptionClickHandlers.Count.ToString());
 			foreach (UIElement element in Chessboard.Children)
 			{
-				Grid chessfield = element as Grid;
-				chessfield.MouseDown += Chessfield_Click;
-
-				for (int i = chessfield.Children.Count - 1; i >= 0 ; --i)
+				if (element is Grid chessfield)
 				{
-					if (chessfield.Children[i] is Border)
+					foreach (MouseButtonEventHandler optionClickHandler in _recentOptionClickHandlers)
 					{
-						chessfield.Children.Remove(chessfield.Children[i]);
+						chessfield.MouseDown -= optionClickHandler;
+					}
+
+					for (int i = chessfield.Children.Count - 1; i >= 0; --i)
+					{
+						if (chessfield.Children[i] is Border)
+						{
+							chessfield.Children.Remove(chessfield.Children[i]);
+						}
 					}
 				}
-
 			}
+			_recentOptionClickHandlers.Clear();
 		}
 
 		#endregion
@@ -230,6 +261,7 @@ namespace Chess
 
 		private void Chessfield_Click(object sender, MouseButtonEventArgs e)
 		{
+			Log("Chessfield clicked");
 			// Check if sender is a chessfield
 			if (sender is Grid chessfield)
 			{
@@ -253,6 +285,32 @@ namespace Chess
 					}
 					else { Console.WriteLine("Wrong Color"); }
 				}
+			}
+		}
+
+		private void Option_Click(object sender, MouseButtonEventArgs e, Grid Chessfield, int SourceX, int SourceY)
+		{
+			Log("Option clicked");
+			if (sender is Grid option)
+			{
+				int destX = (int)option.GetValue(Grid.ColumnProperty);
+				int destY = (int)option.GetValue(Grid.RowProperty);
+
+				Figure source = _currentGame.GetFigureBy(SourceX, SourceY);
+
+				_currentGame.Move(source, destX, destY);
+
+				RemoveOptions();
+
+				PlaceFigures(new Figure[] { new Figure(SourceX, SourceY), new Figure(destX, destY) { Image = source.Image } });
+
+				Log(_recentOptionClickHandlers.Count.ToString());
+				foreach (MouseButtonEventHandler optionClickHandler in _recentOptionClickHandlers)
+				{
+					Chessfield.MouseDown -= optionClickHandler;
+				}
+
+				Chessfield.MouseDown += Chessfield_Click;
 			}
 		}
 

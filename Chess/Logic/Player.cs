@@ -117,6 +117,7 @@ namespace Chess.Logic
 					{
 						Image = FigureSourcesWhite[3],
 						Name = "Bishop2",
+						Color = GameColor.White,
 						X = 5,
 						Y = 0
 					},

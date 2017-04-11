@@ -66,29 +66,11 @@ namespace Chess.Logic
 
 		public void Move(Figure Figure, int DestX, int DestY)
 		{
-			//Figure figure = GetFigureBy(TempFigure);
-
 			if (IsEmpty(DestX, DestY))
 			{
 				Figure.X = DestX;
 				Figure.Y = DestY;
 			}
-		}
-
-		public Figure GetFigureBy(Figure TempFigure)
-		{
-			Player[] players = { Player1, Player2 };
-
-			foreach (Player player in players)
-			{
-				Figure figure = player.Figures.Find(tempFigure => tempFigure.X == TempFigure.X && tempFigure.Y == TempFigure.Y);
-				if (figure != null)
-				{
-					return figure;
-				}
-			}
-
-			return new Figure();
 		}
 
 		public Figure GetFigureBy(int X, int Y)
