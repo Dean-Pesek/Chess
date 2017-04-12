@@ -46,9 +46,9 @@ namespace Chess.Logic
 				CurrentPlayer = Player2;
 		}
 
-		public List<(int, int)> GetOptions(Figure Figure)
+		public List<Option> GetOptions(Figure Figure)
 		{
-			List<(int, int)> options = new List<(int, int)>();
+			List<Option> options = new List<Option>();
 
 			for (int y = 0; y < 8; ++y)
 			{
@@ -56,7 +56,7 @@ namespace Chess.Logic
 				{
 					if (IsEmpty(x, y))
 					{
-						options.Add((x, y));
+						options.Add(new Option(x, y));
 					}
 				}
 			}

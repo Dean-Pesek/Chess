@@ -22,7 +22,7 @@ namespace Chess
 		private Game _currentGame;
 		private List<Game> _recentGames = new List<Game>();
 
-		private List<MouseButtonEventHandler> _recentOptionClickHandlers = new List<MouseButtonEventHandler>();
+		private List<Option> _recentOptions = new List<Option>();
 
 		#endregion
 
@@ -40,8 +40,13 @@ namespace Chess
 
 		#region Chess
 
+		/// <summary>
+		/// Creates the fields inside the Chessboard
+		/// </summary>
 		private void CreateChessboard()
 		{
+			Chessboard.Children.Clear();
+
 			bool switchColor = false;
 
 			for (int y = 0; y < 8; ++y)
@@ -144,11 +149,11 @@ namespace Chess
 			}
 		}
 
-		private void PlaceOptions(List<(int, int)> Options, int SourceX, int SourceY)
+		private void PlaceOptions(List<Option> Options, int SourceX, int SourceY)
 		{
-			foreach ((int, int) option in Options)
+			foreach (Option moveOption in Options)
 			{
-				if (this.FindName($"Chessfield_X{option.Item1}Y{option.Item2}") is Grid chessfield)
+				if (this.FindName($"Chessfield_X{moveOption.X}Y{moveOption.Y}") is Grid chessfield)
 				{
 					chessfield.Children.Add(new Border
 					{
@@ -159,28 +164,38 @@ namespace Chess
 
 					chessfield.MouseDown -= Chessfield_Click;
 
-					Log(_recentOptionClickHandlers.Count.ToString());
-					foreach (MouseButtonEventHandler optionClickHandler in _recentOptionClickHandlers)
-					{
-						chessfield.MouseDown -= optionClickHandler;
-					}
+					//Option removeOption = _recentOptions.Find(recentOption => recentOption.X == moveOption.X && recentOption.Y == moveOption.Y);
+					//if (removeOption != null)
+					//{
+					//	Log("is not null");
+					//	foreach (MouseButtonEventHandler recentOptionClickHandler in removeOption.RecentClickHandlers)
+					//	{
+					//		chessfield.MouseDown -= recentOptionClickHandler;
+					//	}
+					//}
 
-					chessfield.MouseDown += (sender, e) => Option_Click(sender, e, chessfield, SourceX, SourceY);
-					_recentOptionClickHandlers.Add((sender, e) => Option_Click(sender, e, chessfield, SourceX, SourceY));
+					MouseButtonEventHandler optionClickHandler = (sender, e) => Option_Click(sender, e, chessfield, SourceX, SourceY);
+
+					chessfield.MouseDown += optionClickHandler;
+
+					_recentOptions.Add(new Option(moveOption.X, moveOption.Y, optionClickHandler));
 				}
 			}
 		}
 
 		private void RemoveOptions()
 		{
-			Log(_recentOptionClickHandlers.Count.ToString());
 			foreach (UIElement element in Chessboard.Children)
 			{
 				if (element is Grid chessfield)
 				{
-					foreach (MouseButtonEventHandler optionClickHandler in _recentOptionClickHandlers)
+					int x = (int)chessfield.GetValue(Grid.ColumnProperty);
+					int y = (int)chessfield.GetValue(Grid.RowProperty);
+
+					Option option = _recentOptions.Find(tempOption => tempOption.X == x && tempOption.Y == y);
+					if (option != null)
 					{
-						chessfield.MouseDown -= optionClickHandler;
+						chessfield.MouseDown -= option.ClickHandler;
 					}
 
 					for (int i = chessfield.Children.Count - 1; i >= 0; --i)
@@ -192,7 +207,7 @@ namespace Chess
 					}
 				}
 			}
-			_recentOptionClickHandlers.Clear();
+			_recentOptions.Clear();
 		}
 
 		#endregion
@@ -254,7 +269,7 @@ namespace Chess
 			}
 			else if (e.Key == System.Windows.Input.Key.Enter)
 			{
-				PlaceFigures();
+				RemoveOptions();
 			}
 #endif
 		}
@@ -281,6 +296,8 @@ namespace Chess
 							BorderBrush = Brushes.Yellow,
 							BorderThickness = new Thickness(2)
 						});
+
+						// Adds possible Move-Options to the Chessboard
 						PlaceOptions(_currentGame.GetOptions(_currentGame.GetFigureBy(x, y)), x, y);
 					}
 					else { Console.WriteLine("Wrong Color"); }
@@ -303,12 +320,6 @@ namespace Chess
 				RemoveOptions();
 
 				PlaceFigures(new Figure[] { new Figure(SourceX, SourceY), new Figure(destX, destY) { Image = source.Image } });
-
-				Log(_recentOptionClickHandlers.Count.ToString());
-				foreach (MouseButtonEventHandler optionClickHandler in _recentOptionClickHandlers)
-				{
-					Chessfield.MouseDown -= optionClickHandler;
-				}
 
 				Chessfield.MouseDown += Chessfield_Click;
 			}

@@ -13,20 +13,20 @@ namespace Chess.Logic
 		public Uri Image { get; set; }
 		public string Name { get; set; }
 		public GameColor Color { get; set; }
-		public int X { get; set; }
-		public int Y { get; set; }
+		public int? X { get; set; }
+		public int? Y { get; set; }
 
 		#endregion
 
 		#region Constructors
 
-		public Figure() : this(null, null, GameColor.None, 0, 0) { }
+		public Figure() : this(null, null, GameColor.None, null, null) { }
 
-		public Figure(string Name) : this(null, Name, GameColor.None, 0, 0) { }
+		public Figure(string Name) : this(null, Name, GameColor.None, null, null) { }
 
 		public Figure(int X, int Y) : this(null, null, GameColor.None, X, Y) { }
 
-		public Figure(Uri Image, string Name, GameColor Color, int X, int Y)
+		public Figure(Uri Image, string Name, GameColor Color, int? X, int? Y)
 		{
 			this.Image = Image;
 			this.Name = Name;

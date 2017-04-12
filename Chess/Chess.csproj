@@ -94,6 +94,7 @@
     <Compile Include="Logic\Figure.cs" />
     <Compile Include="Logic\FigureListToBigException.cs" />
     <Compile Include="Logic\Game.cs" />
+    <Compile Include="Logic\Option.cs" />
     <Compile Include="Logic\Player.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
