@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace Chess.Logic
 {
+	public enum GameColor
+	{
+		White,
+		Black,
+		None
+	}
+
 	class Game
 	{
 		#region Attributes
@@ -15,6 +22,8 @@ namespace Chess.Logic
 
 		public Player CurrentPlayer { get; set; }
 		public Player Winner { get; set; }
+
+		public List<Option> RecentOptions { get; set; }
 
 		#endregion
 
@@ -29,6 +38,7 @@ namespace Chess.Logic
 			this.Player1 = Player1;
 			this.Player2 = Player2;
 			this.Winner = null;
+			this.RecentOptions = new List<Option>();
 		}
 
 		#endregion
@@ -50,26 +60,115 @@ namespace Chess.Logic
 		{
 			List<Option> options = new List<Option>();
 
-			for (int y = 0; y < 8; ++y)
+			int FigureX = (int)Figure.X;
+			int FigureY = (int)Figure.Y;
+
+			if (Figure.Name.Contains("Pawn"))
 			{
-				for (int x = 0; x < 8; ++x)
+				if (Figure.Color == GameColor.White)
 				{
-					if (IsEmpty(x, y))
+					if (IsEmpty(FigureX, FigureY + 1))
 					{
-						options.Add(new Option(x, y));
+						options.Add(new Option(FigureX, FigureY + 1));
+					}
+
+					if (FigureY == 1)
+					{
+						if (IsEmpty(FigureX, 3))
+						{
+							options.Add(new Option(FigureX, 3));
+						}
+					}
+
+					using (Figure enemy = GetFigureBy(FigureX + 1, FigureY + 1))
+					{
+						if (enemy != null)
+						{
+							if (enemy.Color != Figure.Color)
+							{
+								options.Add(new Option(enemy.X, enemy.Y));
+							}
+						}
+					}
+
+					using (Figure enemy = GetFigureBy(FigureX - 1, FigureY + 1))
+					{
+						if (enemy != null)
+						{
+							if (enemy.Color != Figure.Color)
+							{
+								options.Add(new Option(enemy.X, enemy.Y));
+							}
+						}
+					}
+
+				}
+				else if (Figure.Color == GameColor.Black)
+				{
+					if (IsEmpty(FigureX, FigureY - 1))
+					{
+						options.Add(new Option(FigureX, FigureY - 1));
+					}
+
+					if (FigureY == 6)
+					{
+						if (IsEmpty(FigureX, 4))
+						{
+							options.Add(new Option(FigureX, 4));
+						}
+					}
+
+					using (Figure enemy = GetFigureBy(FigureX + 1, FigureY - 1))
+					{
+						if (enemy != null)
+						{
+							if (enemy.Color != Figure.Color)
+							{
+								options.Add(new Option(enemy.X, enemy.Y));
+							}
+						}
+					}
+
+					using (Figure enemy = GetFigureBy(FigureX - 1, FigureY - 1))
+					{
+						if (enemy != null)
+						{
+							if (enemy.Color != Figure.Color)
+							{
+								options.Add(new Option(enemy.X, enemy.Y));
+							}
+						}
 					}
 				}
 			}
-
+				
 			return options;
 		}
 
 		public void Move(Figure Figure, int DestX, int DestY)
 		{
-			if (IsEmpty(DestX, DestY))
+			Figure.X = DestX;
+			Figure.Y = DestY;
+
+			Figure enemy = GetFigureBy(DestX, DestY);
+			if (enemy != null)
 			{
-				Figure.X = DestX;
-				Figure.Y = DestY;
+				if (enemy.Color != Figure.Color)
+				{
+					enemy.Status = Status.Dead;
+					enemy.X = null;
+					enemy.Y = null;
+				}
+			}
+
+			// Switch Player
+			if (CurrentPlayer == Player1)
+			{
+				CurrentPlayer = Player2;
+			}
+			else if (CurrentPlayer == Player2)
+			{
+				CurrentPlayer = Player1;
 			}
 		}
 

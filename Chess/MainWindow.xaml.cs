@@ -22,8 +22,6 @@ namespace Chess
 		private Game _currentGame;
 		private List<Game> _recentGames = new List<Game>();
 
-		private List<Option> _recentOptions = new List<Option>();
-
 		#endregion
 
 		#region Constructors
@@ -40,9 +38,6 @@ namespace Chess
 
 		#region Chess
 
-		/// <summary>
-		/// Creates the fields inside the Chessboard
-		/// </summary>
 		private void CreateChessboard()
 		{
 			Chessboard.Children.Clear();
@@ -67,7 +62,7 @@ namespace Chess
 					Grid field = new Grid
 					{
 						Name = "Chessfield_X" + x + "Y" + y,
-						Background = white ? Brushes.White : Brushes.Black,
+						Background = white ? new SolidColorBrush(Color.FromRgb(255, 206, 158)) : new SolidColorBrush(Color.FromRgb(209, 139, 071)),
 						ClipToBounds = true,
 						Style = Resources["ChessfieldHover"] as Style
 					};
@@ -118,12 +113,15 @@ namespace Chess
 			{
 				foreach (Figure figure in player.Figures)
 				{
-					if (this.FindName($"Chessfield_X{figure.X}Y{figure.Y}") is Grid chessfield)
+					if (figure.Status == Status.Alive)
 					{
-						chessfield.Children.Add(new SvgViewbox
+						if (this.FindName($"Chessfield_X{figure.X}Y{figure.Y}") is Grid chessfield)
 						{
-							Source = figure.Image
-						});
+							chessfield.Children.Add(new SvgViewbox
+							{
+								Source = figure.Image
+							});
+						}
 					}
 				}
 			}
@@ -133,19 +131,23 @@ namespace Chess
 		{
 			foreach (Figure figure in Figures)
 			{
-				if (this.FindName($"Chessfield_X{figure.X}Y{figure.Y}") is Grid chessfield)
+				if (figure.Status == Status.Alive)
 				{
-					chessfield.Children.Clear();
-
-					if (figure.Image != null)
+					if (this.FindName($"Chessfield_X{figure.X}Y{figure.Y}") is Grid chessfield)
 					{
-						chessfield.Children.Add(new SvgViewbox
-						{
-							Source = figure.Image
-						});
+						chessfield.Children.Clear();
 
+						if (figure.Image != null)
+						{
+							chessfield.Children.Add(new SvgViewbox
+							{
+								Source = figure.Image
+							});
+
+						}
 					}
 				}
+				else { Console.WriteLine("not alive"); }
 			}
 		}
 
@@ -159,26 +161,12 @@ namespace Chess
 					{
 						BorderBrush = Brushes.Red,
 						BorderThickness = new Thickness(2),
-						Background = Brushes.Red
 					});
 
 					chessfield.MouseDown -= Chessfield_Click;
-
-					//Option removeOption = _recentOptions.Find(recentOption => recentOption.X == moveOption.X && recentOption.Y == moveOption.Y);
-					//if (removeOption != null)
-					//{
-					//	Log("is not null");
-					//	foreach (MouseButtonEventHandler recentOptionClickHandler in removeOption.RecentClickHandlers)
-					//	{
-					//		chessfield.MouseDown -= recentOptionClickHandler;
-					//	}
-					//}
-
-					MouseButtonEventHandler optionClickHandler = (sender, e) => Option_Click(sender, e, chessfield, SourceX, SourceY);
-
+					MouseButtonEventHandler optionClickHandler = (sender, e) => Option_Click(sender, e, SourceX, SourceY);
 					chessfield.MouseDown += optionClickHandler;
-
-					_recentOptions.Add(new Option(moveOption.X, moveOption.Y, optionClickHandler));
+					_currentGame.RecentOptions.Add(new Option(moveOption.X, moveOption.Y, optionClickHandler));
 				}
 			}
 		}
@@ -192,7 +180,7 @@ namespace Chess
 					int x = (int)chessfield.GetValue(Grid.ColumnProperty);
 					int y = (int)chessfield.GetValue(Grid.RowProperty);
 
-					Option option = _recentOptions.Find(tempOption => tempOption.X == x && tempOption.Y == y);
+					Option option = _currentGame.RecentOptions.Find(tempOption => tempOption.X == x && tempOption.Y == y);
 					if (option != null)
 					{
 						chessfield.MouseDown -= option.ClickHandler;
@@ -207,7 +195,21 @@ namespace Chess
 					}
 				}
 			}
-			_recentOptions.Clear();
+			_currentGame.RecentOptions.Clear();
+
+			Apply_Chessfield_Click();
+		}
+
+		private void Apply_Chessfield_Click()
+		{
+			foreach (UIElement element in Chessboard.Children)
+			{
+				if (element is Grid chessfield)
+				{
+					chessfield.MouseDown -= Chessfield_Click;
+					chessfield.MouseDown += Chessfield_Click;
+				}
+			}
 		}
 
 		#endregion
@@ -276,7 +278,6 @@ namespace Chess
 
 		private void Chessfield_Click(object sender, MouseButtonEventArgs e)
 		{
-			Log("Chessfield clicked");
 			// Check if sender is a chessfield
 			if (sender is Grid chessfield)
 			{
@@ -305,9 +306,8 @@ namespace Chess
 			}
 		}
 
-		private void Option_Click(object sender, MouseButtonEventArgs e, Grid Chessfield, int SourceX, int SourceY)
+		private void Option_Click(object sender, MouseButtonEventArgs e, int SourceX, int SourceY)
 		{
-			Log("Option clicked");
 			if (sender is Grid option)
 			{
 				int destX = (int)option.GetValue(Grid.ColumnProperty);
@@ -320,8 +320,6 @@ namespace Chess
 				RemoveOptions();
 
 				PlaceFigures(new Figure[] { new Figure(SourceX, SourceY), new Figure(destX, destY) { Image = source.Image } });
-
-				Chessfield.MouseDown += Chessfield_Click;
 			}
 		}
 
