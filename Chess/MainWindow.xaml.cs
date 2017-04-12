@@ -291,12 +291,12 @@ namespace Chess
 
 				RemoveOptions();
 
+				Figure figure = _currentGame.GetAliveFigureBy(x, y);
 				// Check if sender is a field with a figure
-				if (!_currentGame.IsEmpty(x, y))
+				if (figure != null)
 				{
-					Figure figure = _currentGame.GetAliveFigureBy(x, y);
 					// Check if sender figure is the correct color
-					if (figure.Color == _currentGame.CurrentPlayer.Color && figure.Status == Status.Alive)
+					if (figure.Color == _currentGame.CurrentPlayer.Color)
 					{
 						chessfield.Children.Add(new Border
 						{
