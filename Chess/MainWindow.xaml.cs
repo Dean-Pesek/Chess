@@ -264,14 +264,19 @@ namespace Chess
 #if DEBUG
 			if (e.Key == System.Windows.Input.Key.Space)
 			{
-				using (Stream stream = File.OpenWrite("D:\\Test.xaml"))
+				Player[] players = { _currentGame.Player1, _currentGame.Player2 };
+
+				foreach (Player player in players)
 				{
-					XamlWriter.Save(this, stream);
+					foreach (Figure figure in player.Figures)
+					{
+						Console.WriteLine($"Name:{figure.Name} Status:{figure.Status} X:{figure.X} Y:{figure.Y}");
+					}
 				}
 			}
 			else if (e.Key == System.Windows.Input.Key.Enter)
 			{
-				RemoveOptions();
+				PlaceFigures();
 			}
 #endif
 		}
@@ -289,17 +294,18 @@ namespace Chess
 				// Check if sender is a field with a figure
 				if (!_currentGame.IsEmpty(x, y))
 				{
+					Figure figure = _currentGame.GetAliveFigureBy(x, y);
 					// Check if sender figure is the correct color
-					if (_currentGame.GetFigureBy(x, y).Color == _currentGame.CurrentPlayer.Color)
+					if (figure.Color == _currentGame.CurrentPlayer.Color && figure.Status == Status.Alive)
 					{
-						(this.FindName($"Chessfield_X{x}Y{y}") as Grid).Children.Add(new Border
+						chessfield.Children.Add(new Border
 						{
 							BorderBrush = Brushes.Yellow,
 							BorderThickness = new Thickness(2)
 						});
 
 						// Adds possible Move-Options to the Chessboard
-						PlaceOptions(_currentGame.GetOptions(_currentGame.GetFigureBy(x, y)), x, y);
+						PlaceOptions(_currentGame.GetOptions(_currentGame.GetAliveFigureBy(x, y)), x, y);
 					}
 					else { Console.WriteLine("Wrong Color"); }
 				}
@@ -313,13 +319,13 @@ namespace Chess
 				int destX = (int)option.GetValue(Grid.ColumnProperty);
 				int destY = (int)option.GetValue(Grid.RowProperty);
 
-				Figure source = _currentGame.GetFigureBy(SourceX, SourceY);
+				Figure source = _currentGame.GetAliveFigureBy(SourceX, SourceY);
 
 				_currentGame.Move(source, destX, destY);
 
 				RemoveOptions();
 
-				PlaceFigures(new Figure[] { new Figure(SourceX, SourceY), new Figure(destX, destY) { Image = source.Image } });
+				PlaceFigures(new Figure[] { new Figure(SourceX, SourceY), source });
 			}
 		}
 

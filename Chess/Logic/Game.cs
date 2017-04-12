@@ -80,7 +80,7 @@ namespace Chess.Logic
 						}
 					}
 
-					using (Figure enemy = GetFigureBy(FigureX + 1, FigureY + 1))
+					using (Figure enemy = GetAliveFigureBy(FigureX + 1, FigureY + 1))
 					{
 						if (enemy != null)
 						{
@@ -91,7 +91,7 @@ namespace Chess.Logic
 						}
 					}
 
-					using (Figure enemy = GetFigureBy(FigureX - 1, FigureY + 1))
+					using (Figure enemy = GetAliveFigureBy(FigureX - 1, FigureY + 1))
 					{
 						if (enemy != null)
 						{
@@ -118,7 +118,7 @@ namespace Chess.Logic
 						}
 					}
 
-					using (Figure enemy = GetFigureBy(FigureX + 1, FigureY - 1))
+					using (Figure enemy = GetAliveFigureBy(FigureX + 1, FigureY - 1))
 					{
 						if (enemy != null)
 						{
@@ -129,7 +129,7 @@ namespace Chess.Logic
 						}
 					}
 
-					using (Figure enemy = GetFigureBy(FigureX - 1, FigureY - 1))
+					using (Figure enemy = GetAliveFigureBy(FigureX - 1, FigureY - 1))
 					{
 						if (enemy != null)
 						{
@@ -141,51 +141,45 @@ namespace Chess.Logic
 					}
 				}
 			}
-				
+			else if (Figure.Name.Contains("Rook"))
+			{
+
+			}
+			
 			return options;
 		}
 
 		public void Move(Figure Figure, int DestX, int DestY)
 		{
-			Figure.X = DestX;
-			Figure.Y = DestY;
-
-			Figure enemy = GetFigureBy(DestX, DestY);
+			Figure enemy = GetAliveFigureBy(DestX, DestY);
 			if (enemy != null)
 			{
 				if (enemy.Color != Figure.Color)
 				{
 					enemy.Status = Status.Dead;
-					enemy.X = null;
-					enemy.Y = null;
 				}
 			}
 
-			// Switch Player
-			if (CurrentPlayer == Player1)
-			{
-				CurrentPlayer = Player2;
-			}
-			else if (CurrentPlayer == Player2)
-			{
-				CurrentPlayer = Player1;
-			}
+			Figure.X = DestX;
+			Figure.Y = DestY;
+			
+			SwitchPlayers();
 		}
 
-		public Figure GetFigureBy(int X, int Y)
+		public Figure GetAliveFigureBy(int X, int Y)
 		{
 			Player[] players = { Player1, Player2 };
 
 			foreach (Player player in players)
 			{
-				Figure figure = player.Figures.Find(tempFigure => tempFigure.X == X && tempFigure.Y == Y);
+				Figure figure = player.Figures.Find(tempFigure => tempFigure.X == X && tempFigure.Y == Y && tempFigure.Status == Status.Alive);
 				if (figure != null)
 				{
 					return figure;
 				}
 			}
 
-			return new Figure();
+			return null;
 		}
 
 		public bool IsEmpty(int X, int Y)
@@ -195,11 +189,26 @@ namespace Chess.Logic
 			{
 				foreach (Figure figure in player.Figures)
 				{
-					if (figure.X == X && figure.Y == Y)
-						return false;
+					if (figure.Status == Status.Alive)
+					{
+						if (figure.X == X && figure.Y == Y)
+							return false;
+					}
 				}
 			}
 			return true;
+		}
+
+		public void SwitchPlayers()
+		{
+			if (CurrentPlayer == Player1)
+			{
+				CurrentPlayer = Player2;
+			}
+			else if (CurrentPlayer == Player2)
+			{
+				CurrentPlayer = Player1;
+			}
 		}
 
 		#endregion
