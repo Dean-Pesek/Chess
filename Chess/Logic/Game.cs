@@ -215,6 +215,72 @@ namespace Chess.Logic
 					}
 				}
 			}
+			else if (Figure.Name.Contains("Knight"))
+			{
+				// X - 2
+				for (int y = -1; true; y = 1)
+				{
+					Option option = new Option(FigureX - 2, FigureY + y);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option) && obstacle.Color != CurrentPlayer.Color)
+					{
+						options.Add(option);
+					}
+					if (y == 1) break;
+				}
+
+				// X - 1
+				for (int y = -2; true; y = 2)
+				{
+					Option option = new Option(FigureX - 1, FigureY + y);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option) && obstacle.Color != CurrentPlayer.Color)
+					{
+						options.Add(option);
+					}
+					if (y == 2) break;
+				}
+
+				// X + 1
+				for (int y = -2; true; y = 2)
+				{
+					Option option = new Option(FigureX + 1, FigureY + y);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option) && obstacle.Color != CurrentPlayer.Color)
+					{
+						options.Add(option);
+					}
+					if (y == 2) break;
+				}
+
+				// X + 2
+				for (int y = -1; true; y = 1)
+				{
+					Option option = new Option(FigureX + 2, FigureY + y);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option) && obstacle.Color != CurrentPlayer.Color)
+					{
+						options.Add(option);
+					}
+					if (y == 1) break;
+				}
+			}
 			
 			return options;
 		}
@@ -253,6 +319,23 @@ namespace Chess.Logic
 			return null;
 		}
 
+		public Figure GetAliveFigureBy(Option Option)
+		{
+			Player[] players = { Player1, Player2 };
+
+			foreach (Player player in players)
+			{
+				Figure figure = player.Figures.Find(tempFigure => tempFigure.X == Option.X && tempFigure.Y == Option.Y && tempFigure.Status == Status.Alive);
+
+				if (figure != null)
+				{
+					return figure;
+				}
+			}
+
+			return null;
+		}
+
 		public bool IsEmpty(int X, int Y)
 		{
 			Player[] tempPlayers = { Player1, Player2 };
@@ -268,6 +351,20 @@ namespace Chess.Logic
 				}
 			}
 			return true;
+		}
+
+		public static bool OutOfRange(int X, int Y)
+		{
+			if (X < 0 || X > 7 || Y < 0 || Y > 7)
+				return true;
+			return false;
+		}
+
+		public static bool OutOfRange(Option Option)
+		{
+			if (Option.X < 0 || Option.X > 7 || Option.Y < 0 || Option.Y > 7)
+				return true;
+			return false;
 		}
 
 		public void SwitchPlayers()

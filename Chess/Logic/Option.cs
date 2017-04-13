@@ -26,5 +26,9 @@ namespace Chess.Logic
 		}
 
 		#endregion
+
+		#region Functions
+
+		#endregion
 	}
 }
