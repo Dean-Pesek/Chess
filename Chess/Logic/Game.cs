@@ -281,6 +281,80 @@ namespace Chess.Logic
 					if (y == 1) break;
 				}
 			}
+			else if (Figure.Name.Contains("Bishop"))
+			{
+				// X- Y-
+				for (Option optionIterator = new Option(FigureX - 1, FigureY - 1);
+					optionIterator.X >= 0 && optionIterator.Y >= 0; 
+					new Action(() => { optionIterator.X--; optionIterator.Y--; }).Invoke())
+				{
+					Option option = new Option(optionIterator.X, optionIterator.Y);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option) && obstacle.Color != CurrentPlayer.Color)
+					{
+						options.Add(option);
+						break;
+					}
+				}
+
+				// X- Y+
+				for (Option optionIterator = new Option(FigureX - 1, FigureY + 1);
+					optionIterator.X >= 0 && optionIterator.Y < 8;
+					new Action(() => { optionIterator.X--; optionIterator.Y++; }).Invoke())
+				{
+					Option option = new Option(optionIterator.X, optionIterator.Y);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option) && obstacle.Color != CurrentPlayer.Color)
+					{
+						options.Add(option);
+						break;
+					}
+				}
+
+				// X+ Y-
+				for (Option optionIterator = new Option(FigureX + 1, FigureY - 1);
+					optionIterator.X < 8 && optionIterator.Y >= 0;
+					new Action(() => { optionIterator.X++; optionIterator.Y--; }).Invoke())
+				{
+					Option option = new Option(optionIterator.X, optionIterator.Y);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option) && obstacle.Color != CurrentPlayer.Color)
+					{
+						options.Add(option);
+						break;
+					}
+				}
+
+				// X+ Y+
+				for (Option optionIterator = new Option(FigureX + 1, FigureY + 1);
+					optionIterator.X < 8 && optionIterator.Y < 8;
+					new Action(() => { optionIterator.X++; optionIterator.Y++; }).Invoke())
+				{
+					Option option = new Option(optionIterator.X, optionIterator.Y);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option) && obstacle.Color != CurrentPlayer.Color)
+					{
+						options.Add(option);
+						break;
+					}
+				}
+			}
 			
 			return options;
 		}
