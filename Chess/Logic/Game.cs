@@ -146,16 +146,17 @@ namespace Chess.Logic
 				// Incrementing X
 				for (int x = FigureX + 1; x < 8; ++x)
 				{
-					Figure obstacle = GetAliveFigureBy(x, FigureY);
+					Option option = new Option(FigureX + 1, FigureY);
+					Figure obstacle = GetAliveFigureBy(option);
 					if (obstacle == null)
 					{
-						options.Add(new Option(x, FigureY));
+						options.Add(option);
 					}
 					else
 					{
 						if (obstacle.Color != CurrentPlayer.Color)
 						{
-							options.Add(new Option(x, FigureY));
+							options.Add(option);
 						}
 						break;
 					}
@@ -164,16 +165,17 @@ namespace Chess.Logic
 				// Decrementing X
 				for (int x = FigureX - 1; x >= 0; --x)
 				{
-					Figure obstacle = GetAliveFigureBy(x, FigureY);
+					Option option = new Option(FigureX + 1, FigureY);
+					Figure obstacle = GetAliveFigureBy(option);
 					if (obstacle == null)
 					{
-						options.Add(new Option(x, FigureY));
+						options.Add(option);
 					}
 					else
 					{
 						if (obstacle.Color != CurrentPlayer.Color)
 						{
-							options.Add(new Option(x, FigureY));
+							options.Add(option);
 						}
 						break;
 					}
@@ -182,16 +184,17 @@ namespace Chess.Logic
 				// Incrementing Y
 				for (int y = FigureY + 1; y < 8; ++y)
 				{
-					Figure obstacle = GetAliveFigureBy(FigureX, y);
+					Option option = new Option(FigureX + 1, FigureY);
+					Figure obstacle = GetAliveFigureBy(option);
 					if (obstacle == null)
 					{
-						options.Add(new Option(FigureX, y));
+						options.Add(option);
 					}
 					else
 					{
 						if (obstacle.Color != CurrentPlayer.Color)
 						{
-							options.Add(new Option(FigureX, y));
+							options.Add(option);
 						}
 						break;
 					}
@@ -200,16 +203,17 @@ namespace Chess.Logic
 				// Decrementing Y
 				for (int y = FigureY - 1; y >= 0; --y)
 				{
-					Figure obstacle = GetAliveFigureBy(FigureX, y);
+					Option option = new Option(FigureX + 1, FigureY);
+					Figure obstacle = GetAliveFigureBy(option);
 					if (obstacle == null)
 					{
-						options.Add(new Option(FigureX, y));
+						options.Add(option);
 					}
 					else
 					{
 						if (obstacle.Color != CurrentPlayer.Color)
 						{
-							options.Add(new Option(FigureX, y));
+							options.Add(option);
 						}
 						break;
 					}
@@ -374,16 +378,17 @@ namespace Chess.Logic
 				// Incrementing X
 				for (int x = FigureX + 1; x < 8; ++x)
 				{
-					Figure obstacle = GetAliveFigureBy(x, FigureY);
+					Option option = new Option(FigureX + 1, FigureY);
+					Figure obstacle = GetAliveFigureBy(option);
 					if (obstacle == null)
 					{
-						options.Add(new Option(x, FigureY));
+						options.Add(option);
 					}
 					else
 					{
 						if (obstacle.Color != CurrentPlayer.Color)
 						{
-							options.Add(new Option(x, FigureY));
+							options.Add(option);
 						}
 						break;
 					}
@@ -392,16 +397,17 @@ namespace Chess.Logic
 				// Decrementing X
 				for (int x = FigureX - 1; x >= 0; --x)
 				{
-					Figure obstacle = GetAliveFigureBy(x, FigureY);
+					Option option = new Option(FigureX + 1, FigureY);
+					Figure obstacle = GetAliveFigureBy(option);
 					if (obstacle == null)
 					{
-						options.Add(new Option(x, FigureY));
+						options.Add(option);
 					}
 					else
 					{
 						if (obstacle.Color != CurrentPlayer.Color)
 						{
-							options.Add(new Option(x, FigureY));
+							options.Add(option);
 						}
 						break;
 					}
@@ -410,16 +416,17 @@ namespace Chess.Logic
 				// Incrementing Y
 				for (int y = FigureY + 1; y < 8; ++y)
 				{
-					Figure obstacle = GetAliveFigureBy(FigureX, y);
+					Option option = new Option(FigureX + 1, FigureY);
+					Figure obstacle = GetAliveFigureBy(option);
 					if (obstacle == null)
 					{
-						options.Add(new Option(FigureX, y));
+						options.Add(option);
 					}
 					else
 					{
 						if (obstacle.Color != CurrentPlayer.Color)
 						{
-							options.Add(new Option(FigureX, y));
+							options.Add(option);
 						}
 						break;
 					}
@@ -428,16 +435,17 @@ namespace Chess.Logic
 				// Decrementing Y
 				for (int y = FigureY - 1; y >= 0; --y)
 				{
-					Figure obstacle = GetAliveFigureBy(FigureX, y);
+					Option option = new Option(FigureX + 1, FigureY);
+					Figure obstacle = GetAliveFigureBy(option);
 					if (obstacle == null)
 					{
-						options.Add(new Option(FigureX, y));
+						options.Add(option);
 					}
 					else
 					{
 						if (obstacle.Color != CurrentPlayer.Color)
 						{
-							options.Add(new Option(FigureX, y));
+							options.Add(option);
 						}
 						break;
 					}
@@ -533,7 +541,153 @@ namespace Chess.Logic
 
 				#endregion
 			}
-			
+			else if (Figure.Name.Contains("King"))
+			{
+				#region Rook Ability
+
+				// Incrementing X
+				{
+					Option option = new Option(FigureX + 1, FigureY);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null)
+					{
+						options.Add(option);
+					}
+					else
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
+					}
+				}
+
+				// Decrementing X
+				{
+					Option option = new Option(FigureX - 1, FigureY);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null)
+					{
+						options.Add(option);
+					}
+					else
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
+					}
+				}
+
+				// Incrementing Y
+				{
+					Option option = new Option(FigureX, FigureY + 1);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null)
+					{
+						options.Add(option);
+					}
+					else
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
+					}
+				}
+
+				// Decrementing Y
+				{
+					Option option = new Option(FigureX, FigureY - 1);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null)
+					{
+						options.Add(option);
+					}
+					else
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
+					}
+				}
+
+				#endregion
+
+				#region Bishop Ability
+
+				// X- Y-
+				{
+					Option option = new Option(FigureX - 1, FigureY - 1);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option))
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
+					}
+				}
+
+				// X- Y+
+				{
+					Option option = new Option(FigureX - 1, FigureY + 1);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option))
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
+					}
+				}
+
+				// X+ Y-
+				{
+					Option option = new Option(FigureX + 1, FigureY - 1);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option))
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
+					}
+				}
+
+				// X+ Y+
+				{
+					Option option = new Option(FigureX + 1, FigureY + 1);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option))
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
+					}
+				}
+
+				#endregion
+			}
+
 			return options;
 		}
 
