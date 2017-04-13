@@ -323,6 +323,8 @@ namespace Chess
 
 				_currentGame.Move(source, destX, destY);
 
+				CurrentColorLabel.Content = $"Current Color: {_currentGame.CurrentPlayer.Color.ToString()}";
+
 				RemoveOptions();
 
 				PlaceFigures(new Figure[] { new Figure(SourceX, SourceY), source });
