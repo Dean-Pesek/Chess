@@ -294,9 +294,12 @@ namespace Chess.Logic
 					{
 						options.Add(option);
 					}
-					else if (!OutOfRange(option) && obstacle.Color != CurrentPlayer.Color)
+					else if (!OutOfRange(option))
 					{
-						options.Add(option);
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
 						break;
 					}
 				}
@@ -312,9 +315,12 @@ namespace Chess.Logic
 					{
 						options.Add(option);
 					}
-					else if (!OutOfRange(option) && obstacle.Color != CurrentPlayer.Color)
+					else if (!OutOfRange(option))
 					{
-						options.Add(option);
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
 						break;
 					}
 				}
@@ -330,9 +336,12 @@ namespace Chess.Logic
 					{
 						options.Add(option);
 					}
-					else if (!OutOfRange(option) && obstacle.Color != CurrentPlayer.Color)
+					else if (!OutOfRange(option))
 					{
-						options.Add(option);
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
 						break;
 					}
 				}
@@ -348,12 +357,181 @@ namespace Chess.Logic
 					{
 						options.Add(option);
 					}
-					else if (!OutOfRange(option) && obstacle.Color != CurrentPlayer.Color)
+					else if (!OutOfRange(option))
 					{
-						options.Add(option);
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
 						break;
 					}
 				}
+			}
+			else if (Figure.Name.Contains("Queen"))
+			{
+				#region Rook Ability
+
+				// Incrementing X
+				for (int x = FigureX + 1; x < 8; ++x)
+				{
+					Figure obstacle = GetAliveFigureBy(x, FigureY);
+					if (obstacle == null)
+					{
+						options.Add(new Option(x, FigureY));
+					}
+					else
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(new Option(x, FigureY));
+						}
+						break;
+					}
+				}
+
+				// Decrementing X
+				for (int x = FigureX - 1; x >= 0; --x)
+				{
+					Figure obstacle = GetAliveFigureBy(x, FigureY);
+					if (obstacle == null)
+					{
+						options.Add(new Option(x, FigureY));
+					}
+					else
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(new Option(x, FigureY));
+						}
+						break;
+					}
+				}
+
+				// Incrementing Y
+				for (int y = FigureY + 1; y < 8; ++y)
+				{
+					Figure obstacle = GetAliveFigureBy(FigureX, y);
+					if (obstacle == null)
+					{
+						options.Add(new Option(FigureX, y));
+					}
+					else
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(new Option(FigureX, y));
+						}
+						break;
+					}
+				}
+
+				// Decrementing Y
+				for (int y = FigureY - 1; y >= 0; --y)
+				{
+					Figure obstacle = GetAliveFigureBy(FigureX, y);
+					if (obstacle == null)
+					{
+						options.Add(new Option(FigureX, y));
+					}
+					else
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(new Option(FigureX, y));
+						}
+						break;
+					}
+				}
+
+				#endregion
+
+				#region Bishop Ability
+
+				// X- Y-
+				for (Option optionIterator = new Option(FigureX - 1, FigureY - 1);
+					optionIterator.X >= 0 && optionIterator.Y >= 0;
+					new Action(() => { optionIterator.X--; optionIterator.Y--; }).Invoke())
+				{
+					Option option = new Option(optionIterator.X, optionIterator.Y);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option))
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
+						break;
+					}
+				}
+
+				// X- Y+
+				for (Option optionIterator = new Option(FigureX - 1, FigureY + 1);
+					optionIterator.X >= 0 && optionIterator.Y < 8;
+					new Action(() => { optionIterator.X--; optionIterator.Y++; }).Invoke())
+				{
+					Option option = new Option(optionIterator.X, optionIterator.Y);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option))
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
+						break;
+					}
+				}
+
+				// X+ Y-
+				for (Option optionIterator = new Option(FigureX + 1, FigureY - 1);
+					optionIterator.X < 8 && optionIterator.Y >= 0;
+					new Action(() => { optionIterator.X++; optionIterator.Y--; }).Invoke())
+				{
+					Option option = new Option(optionIterator.X, optionIterator.Y);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option))
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
+						break;
+					}
+				}
+
+				// X+ Y+
+				for (Option optionIterator = new Option(FigureX + 1, FigureY + 1);
+					optionIterator.X < 8 && optionIterator.Y < 8;
+					new Action(() => { optionIterator.X++; optionIterator.Y++; }).Invoke())
+				{
+					Option option = new Option(optionIterator.X, optionIterator.Y);
+					Figure obstacle = GetAliveFigureBy(option);
+					if (obstacle == null && !OutOfRange(option))
+					{
+						options.Add(option);
+					}
+					else if (!OutOfRange(option))
+					{
+						if (obstacle.Color != CurrentPlayer.Color)
+						{
+							options.Add(option);
+						}
+						break;
+					}
+				}
+
+				#endregion
 			}
 			
 			return options;
