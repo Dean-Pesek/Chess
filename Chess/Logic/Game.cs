@@ -143,6 +143,7 @@ namespace Chess.Logic
 			}
 			else if (Figure.Name.Contains("Rook"))
 			{
+                // get random position for the piece
 				// Incrementing X
 				for (int x = FigureX + 1; x < 8; ++x)
 				{
@@ -221,8 +222,9 @@ namespace Chess.Logic
 			}
 			else if (Figure.Name.Contains("Knight"))
 			{
-				// X - 2
-				for (int y = -1; true; y = 1)
+                // get random position for the piece
+                // X - 2
+                for (int y = -1; true; y = 1)
 				{
 					Option option = new Option(FigureX - 2, FigureY + y);
 					Figure obstacle = GetAliveFigureBy(option);
@@ -287,8 +289,9 @@ namespace Chess.Logic
 			}
 			else if (Figure.Name.Contains("Bishop"))
 			{
-				// X- Y-
-				for (Option optionIterator = new Option(FigureX - 1, FigureY - 1);
+                // get random position for the piece
+                // X- Y-
+                for (Option optionIterator = new Option(FigureX - 1, FigureY - 1);
 					optionIterator.X >= 0 && optionIterator.Y >= 0; 
 					new Action(() => { optionIterator.X--; optionIterator.Y--; }).Invoke())
 				{
@@ -373,10 +376,11 @@ namespace Chess.Logic
 			}
 			else if (Figure.Name.Contains("Queen"))
 			{
-				#region Rook Ability
+                // get random position for the piece
+                #region Rook Ability
 
-				// Incrementing X
-				for (int x = FigureX + 1; x < 8; ++x)
+                // Incrementing X
+                for (int x = FigureX + 1; x < 8; ++x)
 				{
 					Option option = new Option(FigureX + 1, FigureY);
 					Figure obstacle = GetAliveFigureBy(option);
@@ -543,11 +547,12 @@ namespace Chess.Logic
 			}
 			else if (Figure.Name.Contains("King"))
 			{
-				#region Rook Ability
+                // get random position for the piece
+                #region Rook Ability
 
-				// Incrementing X
-				{
-					Option option = new Option(FigureX + 1, FigureY);
+                // Incrementing X
+                {
+                    Option option = new Option(FigureX + 1, FigureY);
 					Figure obstacle = GetAliveFigureBy(option);
 					if (obstacle == null)
 					{
@@ -690,6 +695,11 @@ namespace Chess.Logic
 
 			return options;
 		}
+
+        private void formBackRow()
+        {
+
+        }
 
 		public void Move(Figure Figure, int DestX, int DestY)
 		{

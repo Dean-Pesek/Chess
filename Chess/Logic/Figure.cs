@@ -17,7 +17,7 @@ namespace Chess.Logic
 	class Figure : IDisposable
 	{
 		#region Attributes
-
+        // alter the X/Y coordinate when assigning the back row
 		public Uri Image { get; set; }
 		public string Name { get; set; }
 		public GameColor Color { get; set; }
