@@ -22,14 +22,17 @@ namespace Chess
 		private Game _currentGame;
 		private List<Game> _recentGames = new List<Game>();
 
-		#endregion
+        #endregion
 
-		#region Constructors
+        #region Constructors
 
-		public MainWindow()
+        private object data;
+
+		public MainWindow(object data)
 		{
+            this.data = data;
 			InitializeComponent();
-
+            Console.WriteLine(data.ToString());
 			CreateChessboard();
 			StartGame("Player1", "Player2");
 		}
