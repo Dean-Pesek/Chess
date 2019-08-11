@@ -229,7 +229,7 @@ namespace Chess.Logic
             else
             {
                 //this is chess 960
-                string[] backRow = {"Rook1,Knight1,Bishop1,Queen,King,Bishop2,Knight2,Rook2"};
+                string[] backRow = {"Rook1","Knight1","Bishop1","Queen","King","Bishop2","Knight2","Rook2"};
                 Random ran = new Random();
                 do
                 {
