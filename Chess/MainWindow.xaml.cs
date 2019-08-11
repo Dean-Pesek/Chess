@@ -93,13 +93,13 @@ namespace Chess
 		private void StartGame(string Player1Name, string Player2Name)
 		{
 			_currentGame = new Game(Player1Name, Player2Name);
-			_currentGame.SetDefault();
+			_currentGame.SetDefault(data.ToString());
 			PlaceFigures();
 		}
 
 		private void ResetGame()
 		{
-			_currentGame.SetDefault();
+			_currentGame.SetDefault(data.ToString());
 			PlaceFigures();
 		}
 

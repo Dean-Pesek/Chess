@@ -45,10 +45,10 @@ namespace Chess.Logic
 
 		#region Functions
 
-		public void SetDefault()
+		public void SetDefault(String mode)
 		{
-			Player1.SetDefaultFigures();
-			Player2.SetDefaultFigures();
+			Player1.SetDefaultFigures(mode);
+			Player2.SetDefaultFigures(mode);
 
 			if (Player1.Color == GameColor.White)
 				CurrentPlayer = Player1;
