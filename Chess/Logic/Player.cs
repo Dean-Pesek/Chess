@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Chess.Logic
 {
@@ -227,8 +228,54 @@ namespace Chess.Logic
             }
             else
             {
-
+                //this is chess 960
+                string[] backRow = {"Rook1,Knight1,Bishop1,Queen,King,Bishop2,Knight2,Rook2"};
+                Random ran = new Random();
+                do
+                {
+                    backRow = backRow.OrderBy(x => ran.Next()).ToArray();
+                }
+                while(!valid960BackRow(backRow));
             }
+        }
+
+        private bool valid960BackRow(string[] backRow)
+        {
+            bool validKing = false;
+            bool validBishops = false;
+            for(int i = 0;i<backRow.Length;i++)
+            {
+                if(backRow[i]=="Rook1"|backRow[i]=="Rook2")
+                {
+                    for(int j=i;j<backRow.Length;j++)
+                    {
+                        if(backRow[j]=="Rook1"||backRow[j]=="Rook2")
+                        {
+                            validKing=false;
+                            break;
+                        }
+                        else if(backRow[j]=="King")
+                        {
+                            validKing=true;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+
+            int b1Pos=-1,b2Pos=-1;
+            for(int i = 0;i<backRow.Length;i++)
+            {
+                if(backRow[i]=="Bishop1")
+                    b1Pos=i;
+                if(backRow[i]=="Bishop2")
+                    b2Pos=i;
+            }
+            if(b1Pos%2!=b2Pos%2)
+                validBishops=true;
+
+            return validKing&&validBishops;
         }
 
         #endregion
