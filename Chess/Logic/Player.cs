@@ -236,6 +236,122 @@ namespace Chess.Logic
                     backRow = backRow.OrderBy(x => ran.Next()).ToArray();
                 }
                 while(!valid960BackRow(backRow));
+                GameColor colorVal = Color;
+                Uri[] FigureSources;
+                int yVal;
+                if(colorVal==GameColor.White)
+                {
+                    FigureSources=FigureSourcesWhite;
+                    yVal = 0;
+                }
+                else
+                {
+                    FigureSources=FigureSourcesBlack;
+                    yVal=7;
+                }
+                for(int i = 0;i<backRow.Length;i++)
+                {
+                    if(backRow[i]=="Rook1")
+                    {
+                        Figures.Add(new Figure
+                        {
+                            Image=FigureSources[1],
+                            Name="Rook1",
+                            Color=colorVal,
+                            X=i,
+                            Y=yVal
+                        });
+                    }
+                    else if(backRow[i]=="Knight1")
+                    {
+                        Figures.Add(new Figure
+                        {
+                            Image=FigureSources[2],
+                            Name="Knight1",
+                            Color=colorVal,
+                            X=i,
+                            Y=yVal
+                        });
+                    }
+                    else if(backRow[i]=="Bishop1")
+                    {
+                        Figures.Add(new Figure
+                        {
+                            Image=FigureSources[3],
+                            Name="Bishop1",
+                            Color=colorVal,
+                            X=i,
+                            Y=yVal
+                        });
+                    }
+                    else if(backRow[i]=="Queen")
+                    {
+                        Figures.Add(new Figure
+                        {
+                            Image=FigureSources[4],
+                            Name="Queen",
+                            Color=colorVal,
+                            X=i,
+                            Y=yVal
+                        });
+                    }
+                    else if(backRow[i]=="King")
+                    {
+                        Figures.Add(new Figure
+                        {
+                            Image=FigureSources[5],
+                            Name="King",
+                            Color=colorVal,
+                            X=i,
+                            Y=yVal
+                        });
+                    }
+                    else if(backRow[i]=="Bishop2")
+                    {
+                        Figures.Add(new Figure
+                        {
+                            Image=FigureSources[3],
+                            Name="Bishop2",
+                            Color=colorVal,
+                            X=i,
+                            Y=yVal
+                        });
+                    }
+                    else if(backRow[i]=="Knight2")
+                    {
+                        Figures.Add(new Figure
+                        {
+                            Image=FigureSources[2],
+                            Name="Knight2",
+                            Color=colorVal,
+                            X=i,
+                            Y=yVal
+                        });
+                    }
+                    else if(backRow[i]=="Rook2")
+                    {
+                        Figures.Add(new Figure
+                        {
+                            Image=FigureSources[1],
+                            Name="Rook2",
+                            Color=colorVal,
+                            X=i,
+                            Y=yVal
+                        });
+                    }
+                }
+                //pawns
+                for(int i = 0;i<8;++i)
+                {
+                    Figures.Add(new Figure
+                    {
+                        Image=FigureSources[0],
+                        Name=$"Pawn{i+1}",
+                        Color=colorVal,
+                        X=i,
+                        Y=yVal==0?1:6
+                    });
+                }
             }
         }
 
@@ -247,7 +363,7 @@ namespace Chess.Logic
             {
                 if(backRow[i]=="Rook1"|backRow[i]=="Rook2")
                 {
-                    for(int j=i;j<backRow.Length;j++)
+                    for(int j=i+1;j<backRow.Length;j++)
                     {
                         if(backRow[j]=="Rook1"||backRow[j]=="Rook2")
                         {
